@@ -1,0 +1,17 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: always
+    environment:
+      POSTGRES_DB: minilearn
+      POSTGRES_USER: minilearn
+      POSTGRES_PASSWORD: devpassword123   
+    ports:
+      - "5433:5432"                       # 5433, чтобы не конфликтовал с локальным postgres, если он у тебя стоит
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
