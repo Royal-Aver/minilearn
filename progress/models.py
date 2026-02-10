@@ -51,6 +51,14 @@ class Enrollment(models.Model):
             self.completed_at = timezone.now()
             self.save()
 
+    def progress_percentage(self):
+        """Процент прохождения курса студентом"""
+        total_lessons = self.course.lessons.count()
+        if total_lessons == 0:
+            return 0
+        completed_lessons = self.lesson_progress.filter(is_completed=True).count()
+        return round((completed_lessons / total_lessons) * 100, 1)
+
 
 class LessonProgress(models.Model):
     """

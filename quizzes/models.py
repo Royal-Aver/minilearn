@@ -29,6 +29,14 @@ class Quiz(models.Model):
         verbose_name = "Тест"
         verbose_name_plural = "Тесты"
 
+    def get_correct_answers_count(self):
+        return self.questions.annotate(
+            correct_count=models.Count(
+                'answers', filter=models.Q(
+                    answers__is_correct=True))
+        ).aggregate(
+            total=models.Sum('correct_count'))['total'] or 0
+
     def __str__(self):
         return f"Quiz: {self.title} ({self.lesson.title})"
 

@@ -70,6 +70,9 @@ class Lesson(models.Model):
         ordering = ['course', 'order']
         unique_together = ['course', 'slug']
 
+    def has_quiz(self):
+        return hasattr(self, 'quiz') and self.quiz is not None
+
     def save(self, *args, **kwargs):
         if not self.slug:
             base_slug = slugify(self.title)
