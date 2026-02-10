@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'lessons.apps.LessonsConfig',
     'quizzes.apps.QuizzesConfig',
     'progress.apps.ProgressConfig',
+    'api.apps.ApiConfig',
 ]
 
 AUTH_USER_MODEL = 'users.CustomUser'
@@ -153,4 +154,5 @@ SPECTACULAR_SETTINGS = {
     'SERVE_INCLUDE_SCHEMA': True,
     # Чтобы красиво отображались русские строки
     'SCHEMA_PATH_PREFIX': '/api/v1',
+    'OAS_VERSION': '3.0.3',
 }
