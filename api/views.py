@@ -35,10 +35,13 @@ class ProfileView(generics.RetrieveAPIView):
         return self.request.user
 
 
-class CourseListView(generic.ListAPIview):
+class CourseListView(generics.ListAPIView):
     """
     Список всех курсов.
     Пока доступен всем (без авторизации).
     """
-    courses = Course.objects.all()
     serializer_class = CourseSerializer
+
+    def get_queryset(self):
+        """Возвращаем только опубликованные курсы"""
+        return Course.objects.filter(is_published=True)
