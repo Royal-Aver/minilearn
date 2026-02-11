@@ -48,27 +48,6 @@ class RegisterSerializer(serializers.ModelSerializer):
         return user
 
 
-class CourseSerializer(serializers.ModelSerializer):
-    """
-    Сериализатор для курсов.
-    Показывает основную информацию о курсе.
-    """
-    class Meta:
-        model = Course
-        fields = (
-            'id',
-            'title',
-            'slug',
-            'description',
-            'teacher',
-            'category',
-            'created_at',
-            'is_published',
-            'cover_image'
-        )
-        read_only_fields = ('id', 'created_at', 'slug')
-
-
 class LessonSerializer(serializers.ModelSerializer):
     """
     Простой сериализатор для уроков.
@@ -87,3 +66,27 @@ class LessonSerializer(serializers.ModelSerializer):
             'is_published'
         )
         read_only_fields = ('id', 'slug', 'order')
+
+
+class CourseSerializer(serializers.ModelSerializer):
+    """
+    Сериализатор для курсов.
+    Показывает основную информацию о курсе + вложенный список уроков.
+    """
+    lessons = LessonSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Course
+        fields = (
+            'id',
+            'title',
+            'slug',
+            'description',
+            'teacher',
+            'category',
+            'created_at',
+            'is_published',
+            'cover_image',
+            'lessons'
+        )
+        read_only_fields = ('id', 'created_at', 'slug', 'lessons')
