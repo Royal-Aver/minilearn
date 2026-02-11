@@ -45,3 +45,13 @@ class CourseListView(generics.ListAPIView):
     def get_queryset(self):
         """Возвращаем только опубликованные курсы"""
         return Course.objects.filter(is_published=True)
+
+
+class CourseDetailView(generics.RetrieveAPIView):
+    """
+    Детальная информация об одном курсе по его ID.
+    Доступен всем (пока без авторизации).
+    """
+    queryset = Course.objects.all()
+    serializer_class = CourseSerializer
+    lookup_field = 'slug'
