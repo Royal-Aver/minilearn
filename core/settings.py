@@ -156,3 +156,12 @@ SPECTACULAR_SETTINGS = {
     'SCHEMA_PATH_PREFIX': '/api/v1',
     'OAS_VERSION': '3.0.3',
 }
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION-CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_SCHEMA_CLASS': (
+        'drf_spectacular.openapi.AutoSchema'
+    )
+}
