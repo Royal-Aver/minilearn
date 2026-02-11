@@ -2,6 +2,7 @@ from rest_framework import serializers
 
 from users.models import CustomUser
 from courses.models import Course
+from lessons.models import Lesson
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -66,3 +67,23 @@ class CourseSerializer(serializers.ModelSerializer):
             'cover_image'
         )
         read_only_fields = ('id', 'created_at', 'slug')
+
+
+class LessonSerializer(serializers.ModelSerializer):
+    """
+    Простой сериализатор для уроков.
+    Показывает основные поля без тяжёлого контента.
+    """
+    class Meta:
+        model = Lesson
+        fields = (
+            'id',
+            'title',
+            'slug',
+            'order',
+            'content_type',
+            'video_url',
+            'duration_minutes',
+            'is_published'
+        )
+        read_only_fields = ('id', 'slug', 'order')
