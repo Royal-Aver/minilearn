@@ -1,11 +1,18 @@
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from .serializers import RegisterSerializer, UserSerializer
+
+from .serializers import RegisterSerializer, UserSerializer, CourseSerializer
 from users.models import CustomUser
+from courses.models import Course
 
 
 class RegisterView(generics.CreateAPIView):
+    """
+    Эндпоинт для регистрации нового пользователя.
+    Принимает username, email, password, password2, is_teacher (опционально).
+    Возвращает данные нового пользователя без пароля.
+    """
     queryset = CustomUser.objects.all()
     permission_classes = []  # открыто для всех
     serializer_class = RegisterSerializer
@@ -26,3 +33,12 @@ class ProfileView(generics.RetrieveAPIView):
 
     def get_object(self):
         return self.request.user
+
+
+class CourseListView(generic.ListAPIview):
+    """
+    Список всех курсов.
+    Пока доступен всем (без авторизации).
+    """
+    courses = Course.objects.all()
+    serializer_class = CourseSerializer
